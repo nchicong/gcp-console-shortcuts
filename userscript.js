@@ -20,10 +20,10 @@ var subMenuClickTimeout = 50;
 var newTabIcon = "!";
 var snackBarCss = "#snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;color:#fff;text-align:left;border-radius:2px;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px;font-size:14px}#snackbar.show{visibility:visible;opacity:0.7;-webkit-animation:fadein 0.5s,fadeout 0.5s 5s;animation:fadein 0.5s,fadeout 0.5s 5s}@-webkit-keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@-webkit-keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}@keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}";
 var snackBarContent = "\
+Esc - Search box <br/>\
 Hold Alt key and press:<br/>\
 a - Select project <br/>\
 / - Show hotkeys list in new tab <br/>\
-` - Search box <br/>\
 r - Quick refresh <br/>\
 1 - Compute Engine VMs <br/>\
 2 - Kubernetes Workloads <br/>\
@@ -141,8 +141,8 @@ function initAfterPageLoad() {
 
     setTimeout(function () {
         searchInput = document.querySelector('input.pcc-search-input');
-        searchInput.placeholder = "Hotkey: Alt + `";
-    }, 2500);
+        searchInput.placeholder = "Hotkey: Esc";
+    }, 3000);
 }
 
 function fireEvent(ElementId, EventName){
@@ -168,7 +168,7 @@ function preSubMenuClick(e) {
     initAfterPageLoad();
 
     window.addEventListener('keydown', function(e) {
-        if (e.altKey && e.keyCode == 192) {
+        if (e.keyCode == 27) {
             e.preventDefault();
             var el = document.querySelector('.pcc-search-input');
             el.value = "";

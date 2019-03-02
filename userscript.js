@@ -17,7 +17,6 @@ var match = "";
 var projectSelect;
 var searchInput;
 var subMenuClickTimeout = 50;
-var newTabIcon = "!";
 var snackBarCss = "#snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;color:#fff;text-align:left;border-radius:2px;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px;font-size:14px}#snackbar.show{visibility:visible;opacity:0.7;-webkit-animation:fadein 0.5s,fadeout 0.5s 5s;animation:fadein 0.5s,fadeout 0.5s 5s}@-webkit-keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@-webkit-keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}@keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}";
 var snackBarContent = "\
 Esc - Search box <br/>\
@@ -77,65 +76,7 @@ function showSnackbar() {
     }, 5 * 1000);
 }
 
-function appendProjectNewTabLinks() {
-    return;
-    setTimeout(function () {
-        var table = document.querySelector("table.cfc-table-element");
-
-        if (table.innerHTML.indexOf("Open as new tab") > 0) {
-            return;
-        }
-
-        var projectLinks = document.querySelectorAll("table.cfc-table-element a.cfc-purview-picker-list-name-link");
-
-        projectLinks.forEach(function(item) {
-            item.target = "_blank";
-            var projectId = item.text.trim();
-
-            var newTabLink = document.createElement('a');
-
-            newTabLink.href = location.href.replace(/project=(.*?\&)/, "project=" + projectId + "&");
-            newTabLink.target = "_blank"
-
-            var newTabIconClone = newTabIcon.cloneNode(true);
-            newTabIconClone.title = "Open as new tab";
-            newTabLink.appendChild(newTabIconClone);
-
-            insertAfter(newTabLink, item);
-
-            var span = document.createElement("span");
-            span.innerHTML = "&nbsp;&nbsp;";
-            insertAfter(span, item);
-        });
-    }, 1000);
-}
-
 function initAfterPageLoad() {
-    setTimeout(function () {
-        newTabIcon = document.querySelector('[md-svg-icon="icon-18:external-link"]');
-    }, 2000);
-
-    setTimeout(function () {
-        return;
-        projectSelect = document.querySelector("button.cfc-switcher-button");
-
-        console.log("!!!!", projectSelect.length)
-        addEvent(projectSelect, 'click', function () {
-            appendProjectNewTabLinks();
-
-            var $projectInput= document.querySelector("input.cfc-purview-picker-modal-search-input");
-            addEvent($projectInput, "keyup", function () {
-                setTimeout(function () {
-                    appendProjectNewTabLinks();
-
-                    //if (document.querySelectorAll("tr.cfctest-table-body-row").length == 1) {
-                      //  document.querySelector("a.cfc-purview-picker-list-name-link").click();
-                    //}
-                }, 2000);
-            });
-        });
-    }, 2000);
-
     setTimeout(function () {
         searchInput = document.querySelector('input.pcc-search-input');
         searchInput.placeholder = "Hotkey: Esc";

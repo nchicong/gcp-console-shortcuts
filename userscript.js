@@ -5,7 +5,7 @@
 // @author       nchicong
 // @match        https://console.cloud.google.com/*
 // @grant        none
-// @version 0.2.19
+// @version 0.2.21
 // @license MIT
 // @copyright 2018
 // @updateURL https://openuserjs.org/meta/nchicong/GCP_Shortcuts.meta.js
@@ -22,15 +22,16 @@ var snackBarCss = "#snackbar{visibility:hidden;min-width:250px;margin-left:-125p
 var snackBarContent = "\
 Esc - Search box <br/>\
 Hold Alt key and press:<br/>\
-a - Select project <br/>\
-/ - Show hotkeys list in new tab <br/>\
+a - Switch project <br/>\
+/ - Show hotkeys list<br/>\
 r - Quick refresh <br/>\
 1 - Compute Engine VMs <br/>\
-2 - Kubernetes Workloads <br/>\
-3 - ConfigMap <br/>\
+2 - GKE Workloads <br/>\
+3 - GKE ConfigMap <br/>\
 4 - SQL Instances<br/>\
 5 - Firewall Rules<br/>\
 6 - IAM & Admin <br/>\
+7 - BigQuery <br/>\
 t - Clone this tab <br />\
 l - View log from a GKE Deployment";
 
@@ -111,29 +112,25 @@ function appendProjectNewTabLinks() {
 
 function initAfterPageLoad() {
     setTimeout(function () {
-/*         fireEvent("button.pcc-platform-bar-button", "click");
-
-        fireEvent("[section-id='KUBERNETES_SECTION']", "mouseover" );
-        fireEvent("[section-id='COMPUTE_SECTION']", "mouseover" );
-        fireEvent("[section-id='VIRTUAL_NETWORK_SECTION']", "mouseover" );
-        fireEvent("button.pcc-platform-bar-button", "click");
- */
         newTabIcon = document.querySelector('[md-svg-icon="icon-18:external-link"]');
     }, 2000);
 
     setTimeout(function () {
+        return;
         projectSelect = document.querySelector("button.cfc-switcher-button");
+
+        console.log("!!!!", projectSelect.length)
         addEvent(projectSelect, 'click', function () {
             appendProjectNewTabLinks();
 
-            var projectInput= document.querySelector("input.cfc-purview-picker-modal-search-input");
-            addEvent(projectInput, "keyup", function () {
+            var $projectInput= document.querySelector("input.cfc-purview-picker-modal-search-input");
+            addEvent($projectInput, "keyup", function () {
                 setTimeout(function () {
                     appendProjectNewTabLinks();
 
-                    if (document.querySelectorAll("tr.cfctest-table-body-row").length == 1) {
-                        document.querySelector("a.cfc-purview-picker-list-name-link").click();
-                    }
+                    //if (document.querySelectorAll("tr.cfctest-table-body-row").length == 1) {
+                      //  document.querySelector("a.cfc-purview-picker-list-name-link").click();
+                    //}
                 }, 2000);
             });
         });
@@ -216,6 +213,13 @@ function preSubMenuClick(e) {
             match.click();
         }
 
+        //7
+        if (e.altKey && e.keyCode == 55) {
+            preSubMenuClick(e);
+            match = document.querySelector("a[href^='/bigquery']");
+            match.click();
+        }
+
         //refresh R
         if (e.altKey && e.keyCode == 82) {
             e.preventDefault();
@@ -240,9 +244,10 @@ function preSubMenuClick(e) {
             }
         }
 
-        //project select
+        //switch project
         if (e.altKey && e.keyCode == 65) {
             e.preventDefault();
+            projectSelect = document.querySelector("button.cfc-switcher-button");
             projectSelect.click();
         }
 

@@ -19,11 +19,11 @@ var searchInput;
 var subMenuClickTimeout = 50;
 var snackBarCss = "#snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;color:#fff;text-align:left;border-radius:2px;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px;font-size:14px}#snackbar.show{visibility:visible;opacity:0.7;-webkit-animation:fadein 0.5s,fadeout 0.5s 5s;animation:fadein 0.5s,fadeout 0.5s 5s}@-webkit-keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@-webkit-keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}@keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}";
 var snackBarContent = "\
-Esc - Search box <br/>\
 Hold Alt key and press:<br/>\
-a - Switch project <br/>\
+F - Search box <br/>\
+A - Switch project <br/>\
+R - Quick refresh <br/>\
 / - Show hotkeys list<br/>\
-r - Quick refresh <br/>\
 1 - Compute Engine VMs <br/>\
 2 - GKE Workloads <br/>\
 3 - GKE ConfigMap <br/>\
@@ -31,8 +31,8 @@ r - Quick refresh <br/>\
 5 - Firewall Rules<br/>\
 6 - IAM & Admin <br/>\
 7 - BigQuery <br/>\
-t - Clone this tab <br />\
-l - View log from a GKE Deployment";
+T - Clone this tab <br />\
+L - View log from a GKE Deployment";
 
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
@@ -78,9 +78,9 @@ function showSnackbar() {
 
 function initAfterPageLoad() {
     setTimeout(function () {
-        searchInput = document.querySelector('input.pcc-search-input');
-        searchInput.placeholder = "Hotkey: Esc";
-    }, 3000);
+        searchInput = searchInput || document.querySelector('input.pcc-search-input');
+        searchInput.placeholder = "Hotkey: Alt + F";
+    }, 5000);
 }
 
 function fireEvent(ElementId, EventName){
@@ -106,11 +106,13 @@ function preSubMenuClick(e) {
     initAfterPageLoad();
 
     window.addEventListener('keydown', function(e) {
-        if (e.keyCode == 27) {
+        //Search box
+        if (e.altKey && e.keyCode == 70) {
             e.preventDefault();
-            var el = document.querySelector('.pcc-search-input');
-            el.value = "";
-            el.click();
+            searchInput = searchInput || document.querySelector('input.pcc-search-input');
+            searchInput.value = "";
+            searchInput.click();
+            searchInput.placeholder = "Hotkey: Alt + F";
         }
 
         if (e.altKey && e.keyCode == 49) {
@@ -185,11 +187,18 @@ function preSubMenuClick(e) {
             }
         }
 
-        //switch project
+        //Switch project
         if (e.altKey && e.keyCode == 65) {
             e.preventDefault();
-            projectSelect = document.querySelector("button.cfc-switcher-button");
-            projectSelect.click();
+
+            var cancelButton = document.querySelector("button.mat-secondary");
+            if (cancelButton) {
+                //Press Esc again to close dialog
+                cancelButton.click();
+            } else {
+                projectSelect = projectSelect || document.querySelector("button.cfc-switcher-button");
+                projectSelect.click();
+            }
         }
 
         //close left panel

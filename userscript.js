@@ -5,7 +5,7 @@
 // @author       nchicong
 // @match        https://console.cloud.google.com/*
 // @grant        none
-// @version 0.2.22
+// @version 0.2.23
 // @license MIT
 // @copyright 2018
 // @updateURL https://openuserjs.org/meta/nchicong/GCP_Shortcuts.meta.js
@@ -14,7 +14,7 @@
 var appendedCss = false;
 var appendedDiv = false;
 var match = "";
-var subMenuClickTimeout = 50;
+var subMenuClickTimeout = 100;
 var snackBarCss = "#snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;color:#fff;text-align:left;border-radius:2px;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px;font-size:14px}#snackbar.show{visibility:visible;opacity:0.7;-webkit-animation:fadein 0.5s,fadeout 0.5s 5s;animation:fadein 0.5s,fadeout 0.5s 5s}@-webkit-keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:0.7}}@-webkit-keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}@keyframes fadeout{from{bottom:30px;opacity:0.7}to{bottom:0;opacity:0}}";
 var snackBarContent = "\
 Hold Alt key and press:<br/>\
@@ -95,23 +95,17 @@ function preSubMenuClick(e) {
     window.addEventListener('keydown', function(e) {
         if (e.altKey && e.keyCode == 49) {
             preSubMenuClick(e);
-            fireEvent('[aria-label="Compute Engine"]', "click");
+            setTimeout(function () {
+              fireEvent('[aria-label="Compute Engine"]', "click");
+            }, subMenuClickTimeout);
         }
 
         if (e.altKey && e.keyCode == 50) {
-            preSubMenuClick(e);
-            fireEvent('[aria-label="Kubernetes Engine"]', "click" );
-            setTimeout(function () {
-                document.querySelector("a[href^='/kubernetes/workload']").click()
-            }, subMenuClickTimeout);
+            window.location = "/kubernetes/workload";
         }
 
         if (e.altKey && e.keyCode == 51) {
-            preSubMenuClick(e);
-            document.querySelector('[aria-label="Kubernetes Engine"]').click();
-            setTimeout(function () {
-                document.querySelector("a[href^='/kubernetes/config']").click()
-            }, subMenuClickTimeout);
+            window.location = "/kubernetes/config";
         }
 
         if (e.altKey && e.keyCode == 52) {
@@ -121,24 +115,24 @@ function preSubMenuClick(e) {
         }
 
         if (e.altKey && e.keyCode == 53) {
-            preSubMenuClick(e);
-            document.querySelector('[aria-label="VPC network"]').click();
-            setTimeout(function () {
-                document.querySelector("a[href^='/networking/firewalls/list']").click()
-            }, subMenuClickTimeout);
+            window.location = "/networking/firewalls/list";
         }
 
         if (e.altKey && e.keyCode == 54) {
             preSubMenuClick(e);
-            match = document.querySelector("a[href^='/iam-admin']");
-            match.click();
+            setTimeout(function () {
+              match = document.querySelector("a[href^='/iam-admin']");
+              match.click();
+            }, subMenuClickTimeout);
         }
 
         //7
         if (e.altKey && e.keyCode == 55) {
             preSubMenuClick(e);
-            match = document.querySelector("a[href^='/bigquery']");
-            match.click();
+            setTimeout(function () {
+              match = document.querySelector("a[href^='/bigquery']");
+              match.click();
+            }, subMenuClickTimeout);
         }
 
         //refresh R

@@ -5,7 +5,7 @@
 // @author       nchicong
 // @match        https://console.cloud.google.com/*
 // @grant        none
-// @version 0.2.23
+// @version 0.2.24
 // @license MIT
 // @copyright 2018
 // @updateURL https://openuserjs.org/meta/nchicong/GCP_Shortcuts.meta.js
@@ -22,7 +22,7 @@ R - Quick refresh <br/>\
 / - Show hotkeys list<br/>\
 1 - Compute Engine VMs <br/>\
 2 - GKE Workloads <br/>\
-3 - GKE ConfigMap <br/>\
+3 - GKE Services <br/>\
 4 - SQL Instances<br/>\
 5 - Firewall Rules<br/>\
 6 - IAM & Admin <br/>\
@@ -93,6 +93,10 @@ function preSubMenuClick(e) {
 
 (function() {
     window.addEventListener('keydown', function(e) {
+        if (e.altKey && e.keyCode == 81) {
+            preSubMenuClick(e);
+        }
+
         if (e.altKey && e.keyCode == 49) {
             preSubMenuClick(e);
             setTimeout(function () {
@@ -105,7 +109,7 @@ function preSubMenuClick(e) {
         }
 
         if (e.altKey && e.keyCode == 51) {
-            window.location = "/kubernetes/config";
+            window.location = "/kubernetes/discovery";
         }
 
         if (e.altKey && e.keyCode == 52) {

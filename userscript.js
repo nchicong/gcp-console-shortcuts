@@ -5,7 +5,7 @@
 // @author       nchicong
 // @match        https://console.cloud.google.com/*
 // @grant        none
-// @version 0.2.24
+// @version 0.2.25
 // @license MIT
 // @copyright 2018
 // @updateURL https://openuserjs.org/meta/nchicong/GCP_Shortcuts.meta.js
@@ -21,8 +21,8 @@ Hold Alt key and press:<br/>\
 R - Quick refresh <br/>\
 / - Show hotkeys list<br/>\
 1 - Compute Engine VMs <br/>\
-2 - GKE Workloads <br/>\
-3 - GKE Services <br/>\
+2 - GKE Cluster <br/>\
+3 - GKE Workloads <br/>\
 4 - SQL Instances<br/>\
 5 - Firewall Rules<br/>\
 6 - IAM & Admin <br/>\
@@ -105,11 +105,11 @@ function preSubMenuClick(e) {
         }
 
         if (e.altKey && e.keyCode == 50) {
-            window.location = "/kubernetes/workload";
+            window.location = "/kubernetes/clusters";
         }
 
         if (e.altKey && e.keyCode == 51) {
-            window.location = "/kubernetes/discovery";
+            window.location = "/kubernetes/workload";
         }
 
         if (e.altKey && e.keyCode == 52) {
@@ -190,4 +190,3 @@ function preSubMenuClick(e) {
     });
 
 })();
-

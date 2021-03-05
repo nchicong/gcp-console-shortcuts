@@ -5,7 +5,7 @@
 // @author       nchicong
 // @match        https://console.cloud.google.com/*
 // @grant        none
-// @version 0.2.25
+// @version 0.2.26
 // @license MIT
 // @copyright 2018
 // @updateURL https://openuserjs.org/meta/nchicong/GCP_Shortcuts.meta.js
@@ -142,7 +142,7 @@ function preSubMenuClick(e) {
         //refresh R
         if (e.altKey && e.keyCode == 82) {
             e.preventDefault();
-            document.querySelector('[icon=refresh] button.p6n-material-button').click()
+            document.querySelector('[aria-label="Refresh"]').click();
         }
 
         //new tab
